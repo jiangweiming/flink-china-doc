@@ -1,0 +1,407 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1-SNAPSHOT Documentation: Quick Start: Run K-Means Example</title>
+    <link rel="shortcut icon" href="/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/page/css/flink.css">
+    <link rel="stylesheet" href="/page/css/syntax.css">
+    <link rel="stylesheet" href="/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink.apache.org"><img alt="Apache Flink" src="/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/">中文文档 1.1</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown active">
+              <a href="/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class="active"><a href="/quickstart/run_example_quickstart.html">Run Example</a></li>
+                
+                <li class=""><a href="/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/setup/building.html">Build Flink</a></li>
+                
+                <li class=""><a href="/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown">
+              <a href="/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/apis/common/"><strong>Basic Concepts</strong></a></li>
+                
+                <li class=""><a href="/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/apis/batch/"><strong>Batch Guide</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/apis/connectors.html">Connectors</a></li>
+                
+                <li class=""><a href="/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/apis/cli.html">Command-Line Interface</a></li>
+                
+                <li class=""><a href="/apis/local_execution.html">Local Execution</a></li>
+                
+                <li class=""><a href="/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/apis/java8.html">Java 8</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+                
+                <li class=""><a href="/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+            <li class="hidden-sm "><a href="/about/">关于本站</a></li>
+
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">Search</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+  
+  <div class="col-md-8 col-md-offset-2 text">
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <h1>Quick Start: Run K-Means Example</h1>
+
+
+<ul id="markdown-toc">
+  <li><a href="#setup-flink" id="markdown-toc-setup-flink">Setup Flink</a></li>
+  <li><a href="#generate-input-data" id="markdown-toc-generate-input-data">Generate Input Data</a></li>
+  <li><a href="#inspect-the-input-data" id="markdown-toc-inspect-the-input-data">Inspect the Input Data</a></li>
+  <li><a href="#start-flink" id="markdown-toc-start-flink">Start Flink</a></li>
+  <li><a href="#inspect-and-run-the-k-means-example-program" id="markdown-toc-inspect-and-run-the-k-means-example-program">Inspect and Run the K-Means Example Program</a></li>
+  <li><a href="#shutdown-flink" id="markdown-toc-shutdown-flink">Shutdown Flink</a></li>
+  <li><a href="#analyze-the-result" id="markdown-toc-analyze-the-result">Analyze the Result</a></li>
+</ul>
+
+<p>This guide walks you through the steps of executing an example program (<a href="http://en.wikipedia.org/wiki/K-means_clustering">K-Means clustering</a>) on Flink. 
+On the way, you will see the a visualization of the program, the optimized execution plan, and track the progress of its execution.</p>
+
+<h2 id="setup-flink">Setup Flink</h2>
+<p>Follow the <a href="setup_quickstart.html">instructions</a> to setup Flink and enter the root directory of your Flink setup.</p>
+
+<h2 id="generate-input-data">Generate Input Data</h2>
+<p>Flink contains a data generator for K-Means.</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="c"># Assuming you are in the root directory of your Flink setup</span>
+mkdir kmeans
+<span class="nb">cd </span>kmeans
+<span class="c"># Run data generator</span>
+java -cp ../examples/batch/KMeans.jar:../lib/flink-dist-1.1-SNAPSHOT.jar <span class="se">\</span>
+  org.apache.flink.examples.java.clustering.util.KMeansDataGenerator <span class="se">\</span>
+  -points <span class="m">500</span> -k <span class="m">10</span> -stddev 0.08 -output <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span></code></pre></div>
+
+<p>The generator has the following arguments (arguments in <code>[]</code> are optional):</p>
+
+<div class="highlight"><pre><code class="language-bash">-points &lt;num&gt; -k &lt;num clusters&gt; <span class="o">[</span>-output &lt;output-path&gt;<span class="o">]</span> <span class="o">[</span>-stddev &lt;relative stddev&gt;<span class="o">]</span> <span class="o">[</span>-range &lt;centroid range&gt;<span class="o">]</span> <span class="o">[</span>-seed &lt;seed&gt;<span class="o">]</span></code></pre></div>
+
+<p>The <em>relative standard deviation</em> is an interesting tuning parameter. It determines the closeness of the points to randomly generated centers.</p>
+
+<p>The <code>kmeans/</code> directory should now contain two files: <code>centers</code> and <code>points</code>. The <code>points</code> file contains the points to cluster and the <code>centers</code> file contains initial cluster centers.</p>
+
+<h2 id="inspect-the-input-data">Inspect the Input Data</h2>
+<p>Use the <code>plotPoints.py</code> tool to review the generated data points. <a href="plotPoints.py">Download Python Script</a></p>
+
+<div class="highlight"><pre><code class="language-bash">python plotPoints.py points ./points input</code></pre></div>
+
+<p>Note: You might have to install <a href="http://matplotlib.org/">matplotlib</a> (<code>python-matplotlib</code> package on Ubuntu) to use the Python script.</p>
+
+<p>You can review the input data stored in the <code>input-plot.pdf</code>, for example with Evince (<code>evince input-plot.pdf</code>).</p>
+
+<p>The following overview presents the impact of the different standard deviations on the input data.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">relative stddev = 0.03</th>
+      <th style="text-align: center">relative stddev = 0.08</th>
+      <th style="text-align: center">relative stddev = 0.15</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/page/img/quickstart-example/kmeans003.png" alt="example1" style="width: 275px;" /></td>
+      <td style="text-align: center"><img src="/page/img/quickstart-example/kmeans008.png" alt="example2" style="width: 275px;" /></td>
+      <td style="text-align: center"><img src="/page/img/quickstart-example/kmeans015.png" alt="example3" style="width: 275px;" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="start-flink">Start Flink</h2>
+<p>Start Flink and the web job submission client on your local machine.</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="c"># return to the Flink root directory</span>
+<span class="nb">cd</span> ..
+<span class="c"># start Flink</span>
+./bin/start-local.sh</code></pre></div>
+
+<h2 id="inspect-and-run-the-k-means-example-program">Inspect and Run the K-Means Example Program</h2>
+<p>The Flink web interface allows to submit Flink programs using a graphical user interface.</p>
+
+<div class="row" style="padding-top:15px">
+	<div class="col-md-6">
+		<a data-lightbox="example-1" href="/page/img/quickstart-example/jobmanager_kmeans_submit.png"><img class="img-responsive" src="/page/img/quickstart-example/jobmanager_kmeans_submit.png" /></a>
+	</div>
+	<div class="col-md-6">
+		1. Open web interface on <a href="http://localhost:8081">localhost:8081</a> <br />
+		2. Select the "Submit new Job" page in the menu <br />
+		3. Upload the <code>KMeans.jar</code> from <code>examples/batch</code> by clicking the "Add New" button, and then the "Upload" button. <br />
+		4. Select the <code>KMeans.jar</code> form the list of jobs <br />
+		5. Enter the arguments and options in the lower box: <br />
+		    Leave the <i>Entry Class</i> and <i>Parallelism</i> form empty<br />
+		    Enter the following program arguments: <br />
+		    (KMeans expects the following args: <code>--points &lt;path&gt; --centroids &lt;path&gt; --output &lt;path&gt; --iterations &lt;n&gt;</code>
+			
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">--points /tmp/kmeans/points --centroids /tmp/kmeans/centers --output /tmp/kmeans/result --iterations 10</code></pre></figure>
+<br />
+		6. Press <b>Submit</b> to start the job
+	</div>
+</div>
+<hr />
+
+<div class="row" style="padding-top:15px">
+	<div class="col-md-6">
+		<a data-lightbox="example-1" href="/page/img/quickstart-example/jobmanager_kmeans_execute.png"><img class="img-responsive" src="/page/img/quickstart-example/jobmanager_kmeans_execute.png" /></a>
+	</div>
+
+	<div class="col-md-6">
+		Watch the job executing.
+	</div>
+</div>
+
+<h2 id="shutdown-flink">Shutdown Flink</h2>
+<p>Stop Flink when you are done.</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="c"># stop Flink</span>
+./bin/stop-local.sh</code></pre></div>
+
+<h2 id="analyze-the-result">Analyze the Result</h2>
+<p>Use the <a href="plotPoints.py">Python Script</a> again to visualize the result.</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nb">cd </span>kmeans
+python plotPoints.py result ./result clusters</code></pre></div>
+
+<p>The following three pictures show the results for the sample input above. Play around with the parameters (number of iterations, number of clusters) to see how they affect the result.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">relative stddev = 0.03</th>
+      <th style="text-align: center">relative stddev = 0.08</th>
+      <th style="text-align: center">relative stddev = 0.15</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/page/img/quickstart-example/result003.png" alt="example1" style="width: 275px;" /></td>
+      <td style="text-align: center"><img src="/page/img/quickstart-example/result008.png" alt="example2" style="width: 275px;" /></td>
+      <td style="text-align: center"><img src="/page/img/quickstart-example/result015.png" alt="example3" style="width: 275px;" /></td>
+    </tr>
+  </tbody>
+</table>
+
+
+     <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/wuchong/flink-china-doc/edit/master/quickstart/run_example_quickstart.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="/page/js/codetabs.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>
